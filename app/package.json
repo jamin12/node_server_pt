@@ -18,5 +18,8 @@
     "start": "nodemon ./dist/bin/www.js",
     "build": "tsc -p .",
     "dev": "nodemon --watch \"src/**/*.ts\" --exec \"ts-node\" ./bin/www.ts"
+  },
+  "dependencies": {
+    "body-parser": "^1.20.0"
   }
 }
