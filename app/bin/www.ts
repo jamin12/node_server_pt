@@ -1,8 +1,0 @@
-
-const app = require('../app');
-
-const PORT:number = 3000;
-
-app.listen(PORT, () => {
-    console.log('서버가동');
-});
