@@ -4,11 +4,14 @@ const User = require('../../model/User');
 
 const output = {
     hello: (req,res) => {
-        res.render("home/index.ejs",);
+        res.render("home/index",);
     },
     login: (req,res) => {
-        res.render("home/login.ejs");
-    }
+        res.render("home/login");
+    },
+    register: (req,res) => {
+        res.render("home/register");
+    },
 };
 
 const process = {
