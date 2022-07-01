@@ -19,9 +19,14 @@ class User{
         return { success: false, msg: "User id not match" };
     }
 
-    register(){
+    async register(){
         const client = this.body;
-        UserStorage.save(client);
+        try {
+            const response = await UserStorage.save(client);
+            return response;
+        } catch (err) {
+            return { success: false, msg: err };
+        }
     }
 }
 
