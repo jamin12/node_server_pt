@@ -1,14 +1,20 @@
 "use strict";
 
+const fs = require('fs').promises;
+
 class UserStorage{
-    static #users = {
-        id: ["하나","둘","셋"],
-        pw: ["1234","13245","123456"],
-        name:["우리밋","햐햐","호ㅑ햐하"]
-    };
+    static #getUserInfo(data,id){
+        const users = JSON.parse(data);
+        const idx = users.id.indexOf(id);
+        const userInfo = Object.keys(users).reduce((userInfo,info)=>{
+            userInfo[info] = users[info][idx];
+            return userInfo;
+        },{})
+        return userInfo;
+    }
 
     static getUsers(...fields) {
-        const users = this.#users;
+        // const users = this.#users;
         const newUsers = fields.reduce((newUsers, field) => {
             if(users.hasOwnProperty(field)){
                 newUsers[field] = users[field];
@@ -19,18 +25,19 @@ class UserStorage{
     }
 
     static getUserInfo(id){
-        const users = this.#users;
-        const idx = users.id.indexOf(id);
-        const userInfo = Object.keys(users).reduce((userInfo,info)=>{
-            userInfo[info] = users[info][idx];
-            return userInfo;
-        },{})
+        // const users = this.#users;
+        return fs.readFile("./src/databases/users.json")
+            .then((data) => {
+                return this.#getUserInfo(data,id);
+            })
+            .catch(console.err)        
 
-        return userInfo;
     }
 
+
+
     static save(userInfo){
-        const users = this.#users;
+        // const users = this.#users;
         users.id.push(userInfo.id);
         users.name.push(userInfo.name);
         users.pw.push(userInfo.pw);
