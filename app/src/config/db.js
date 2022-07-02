@@ -1,15 +1,14 @@
-const mysql = require("mysql");
-const fs = require("fs");
+"use strict"; 
 
-let dbinfo = fs.readFileSync("./src/config/dbinfo.json",{encoding:'utf8'});
-dbinfo = JSON.parse(dbinfo);
+const mysql = require("mysql");
+// const fs = require("fs");
 
 const db = mysql.createConnection({
-    host: dbinfo.host,
-    port: dbinfo.port,
-    user: dbinfo.user,
-    password: dbinfo.password,
-    database: dbinfo.database
+    host: process.env.DB_HOST,
+    port: process.env.DB_PORT,
+    user: process.env.DB_USER,
+    password: process.env.DB_PW,
+    database: process.env.DB_DATABASE,
 });
 
 db.connect()
