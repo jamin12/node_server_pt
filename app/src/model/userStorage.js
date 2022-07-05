@@ -1,6 +1,5 @@
 "use strict";
 
-const fs = require('fs').promises;
 const db = require('../config/db');
 
 class UserStorage{
@@ -15,7 +14,7 @@ class UserStorage{
         })
     }
 
-    static async save(userInfo){
+    static save(userInfo){
         return new Promise((resolve,reject) => {
             const query = "insert into users(id,name,pw) values (?,?,?);";
             db.query(query,[userInfo.id,userInfo.name,userInfo.pw],(err) => {

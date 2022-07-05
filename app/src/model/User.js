@@ -19,7 +19,7 @@ class User{
             }
             return { success: false, msg: "User id not match" };
         } catch (error) {
-            return { success: false, msg: err };
+            return { success: false, msg: error.body };
         }
     }
 
