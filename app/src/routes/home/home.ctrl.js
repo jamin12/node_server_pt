@@ -1,5 +1,6 @@
 "use strict";
 
+const logger = require("../../config/logger");
 const User = require('../../model/User');
 
 const output = {
@@ -18,6 +19,12 @@ const process = {
     login: async (req,res) => {
         const user = new User(req.body);
         const response = await user.login();
+        if(response.err){
+            logger.error(`POST /login 500 error: "success : ${response.success}, err : ${response.err}"`);
+        }
+        else{
+            logger.info(`POST /login 200 info: "success : ${response.success}"`);
+        }
         return res.json(response);
         // const id = req.body.id,
         //     pw = req.body.pw;
@@ -37,6 +44,12 @@ const process = {
     register: async (req,res) => {
         const user = new User(req.body);
         const response = await user.register();
+        if(response.err){
+            logger.error(`POST /login 500 error: "success : ${response.success}, err : ${response.err}"`);
+        }
+        else{
+            logger.info(`POST /login 200 error: "success : ${response.success}"`);
+        }
         return res.json(response);
     },
 };

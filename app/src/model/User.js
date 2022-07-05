@@ -13,13 +13,13 @@ class User{
             const {id,pw} = await UserStorage.getUserInfo(client.id);
             if(id){
                 if(id === client.id && pw === client.pw){
-                    return { success: true};
+                    return {success: true};
                 }
                 return { success: false, msg: "User password not match" };
             }
             return { success: false, msg: "User id not match" };
-        } catch (error) {
-            return { success: false, msg: error.body };
+        } catch (err) {
+            return { success: false, err };
         }
     }
 
@@ -29,7 +29,7 @@ class User{
             const response = await UserStorage.save(client);
             return response;
         } catch (err) {
-            return { success: false, msg: err };
+            return { success: false, err };
         }
     }
 }
