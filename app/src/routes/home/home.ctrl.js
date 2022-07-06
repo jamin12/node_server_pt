@@ -19,13 +19,13 @@ const process = {
     login: async (req,res) => {
         const user = new User(req.body);
         const response = await user.login();
-        if(response.err){
-            logger.error(`POST /login 500 error: "success : ${response.success}, err : ${response.err}"`);
-        }
-        else{
-            logger.info(`POST /login 200 info: "success : ${response.success}"`);
-        }
-        return res.json(response);
+        const url = {
+            method: "POST",
+            path: "/login",
+            status: response.err ? 400 : 200
+        };
+        log(response,url);
+        return res.status(url.status).json(response);
         // const id = req.body.id,
         //     pw = req.body.pw;
         // const users = UserStorage.getUsers("id","pw");
@@ -44,13 +44,14 @@ const process = {
     register: async (req,res) => {
         const user = new User(req.body);
         const response = await user.register();
-        if(response.err){
-            logger.error(`POST /login 500 error: "success : ${response.success}, err : ${response.err}"`);
-        }
-        else{
-            logger.info(`POST /login 200 error: "success : ${response.success}"`);
-        }
-        return res.json(response);
+        const url = {
+            method: "POST",
+            path: "/register",
+            status: response.err ? 400 : 201
+        };
+        log(response,url);
+        return res.status(url.status).json(response);
+
     },
 };
 
@@ -59,3 +60,12 @@ module.exports = {
     output,
     process
 };
+
+const log = (response,url) => {
+    if(response.err){
+        logger.error(`${url.method} ${url.path} ${url.status} error: "success : ${response.success}, err : ${response.err}"`);
+    }
+    else{
+        logger.info(`${url.method} ${url.path} ${url.status} info: "success : ${response.success}, msg : ${response.msg || ""}"`);
+    }
+}
